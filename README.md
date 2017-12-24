@@ -1,44 +1,38 @@
-Minecraft: Pi Edition wrapper
+GameMaker (YoYo Games) Pi Runner wrapper
 =============================
 
-This is a wrapper for Minecraft: Pi Edition's OpenGL ES drivers.  It makes
-several assumptions about running on a Raspberry Pi, some of which are not
-valid on our system (Kosagi Novena).  Namely, it suffers from the following:
+This is a wrapper for Pi games built on GameMaker that originally target
+the dispmanx-based graphics libraries. This allows for running these
+these legacy binaries with the Mesa driver on Raspbian Stretch or newer,
+but might also serve to run the programs on non-Broadcom chips.
 
-* Requires libbcm, which does not exist outside Broadcom chips
-* Does not pass the window object to eglContextCreate()
-* Calls init()/destroy() multiple times, which crashes our vendor's GL drivers
-* Links against libGLESv2.so but uses GLES 1.0
+This was forked from xobs/mcrpi-wrapper with the following modifications:
 
-This library and runtime environment aim to solve these problems.
+* Removed unnecessary counters that were delaying necessary egl*() API calls
+* Added shims for GLES1 functions to their GLES2 counterparts lacking the OES suffix
+* Reduced requested resolution, otherwise window fails to initialize properly
 
 Usage
 -----
 
-To compile our libbcm replacement, simply run "make".
+Download any or all three games from [https://www.yoyogames.com/pi]
 
-Then download Minecraft from http://pi.minecraft.net/ and extract it so
-that minecraft-pi is in the current directory.
+    tar xvf SuperCrateBox.tar.gz
+    tar xvf MalditaCastilla.tar.gz
+    tar xvf TheyNeedToBeFed.tar.gz
 
-Copy /usr/lib/libGLESv1_CM.so or /usr/lib/arm-linux-gnueabihf/libGLESv1_CM.so
-to this directory and rename it to libGLESv2.so
+Clone this repo.
 
-Finally, run minecraft-pi with the following invokation:
+    cd gamemaker-rpi-wrapper
+    make
 
-    LD_PRELOAD=./libbcm_host.so LD_LIBRARY_PATH=$PWD ./minecraft-pi
+    sudo raspi-config # Enable full OpenGL with KMS
 
-Gotchas
--------
+    sudo apt install libegl1-mesa libgles2-mesa
 
-Minecraft is run at full-screen for performance reasons.  Unfortunately,
-the Minecraft program doesn't have an "Exit" function, so you'll have to
-come up with your own way of killing it.
+    cd path/to/SuperCrateBox # or one of the other games from Yoyo Games
+    LD_PRELOAD=path/to/gamemaker-rpi-wrapper/libbcm_host.so.1.0 ./SuperCrateBox
 
-Design
-------
-
-There are counters that monitor how many times various functions are
-called.  Minecraft seems to initialize EGL and then tear it down again
-right away, which causes our vendor's driver to crash.  To get around
-this, we count how many times each driver is invoked, and only call
-the real egl functions after a certain number of invocations.
+Super Crate Box works well. Maldita Castilla is quite playable although the world
+jitters when scrolling forward. They Need To Be Fed seems to have trouble properly
+handling mouse movement and clicks.
