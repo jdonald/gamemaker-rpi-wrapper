@@ -125,10 +125,6 @@ EGLAPI EGLBoolean EGLAPIENTRY eglTerminate(EGLDisplay dpy)
 		eglTerminateReal = get_from_libEGL("eglTerminate");
 
 	switch(counter++) {
-	case 0:
-		fprintf(stderr, "1 (lying)\n");
-		return 1;
-
 	default:
 		ret = eglTerminateReal(dpy);
 		fprintf(stderr, "%d\n", ret);
@@ -147,11 +143,6 @@ EGLAPI EGLBoolean EGLAPIENTRY eglDestroySurface(EGLDisplay dpy, EGLSurface surfa
 		eglDestroySurfaceReal = get_from_libEGL("eglDestroySurface");
 
 	switch(counter++) {
-	case 0:
-	case 1:
-		fprintf(stderr, "1 (lying)\n");
-		return 1;
-
 	default:
 		ret = eglDestroySurfaceReal(dpy, surface);
 		fprintf(stderr, "%d\n", ret);
@@ -170,17 +161,6 @@ EGLAPI EGLBoolean EGLAPIENTRY eglSwapBuffers(EGLDisplay dpy, EGLSurface surface)
 		eglSwapBuffersReal = get_from_libEGL("eglSwapBuffers");
 
 	switch(counter++) {
-	case 0:
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-	case 5:
-	case 6:
-	case 7:
-		fprintf(stderr, "1 (guessed)\n");
-		return 1;
-
 	default:
 		ret = eglSwapBuffersReal(dpy, surface);
 		//fprintf(stderr, "%d\n", ret);
@@ -205,10 +185,6 @@ EGLAPI EGLContext EGLAPIENTRY eglCreateContext(EGLDisplay dpy, EGLConfig config,
 
 	switch(counter++) {
 	case 0:
-		fprintf(stderr, "NULL (guessed)\n");
-		return NULL;
-
-	case 1:
 		ret = eglCreateContextReal(dpy, config, share_context, attrib_list);
 		fprintf(stderr, "%p\n", ret);
 		return ret;
@@ -235,10 +211,6 @@ EGLAPI EGLBoolean EGLAPIENTRY eglChooseConfig(EGLDisplay dpy, const EGLint *attr
 
 	switch(counter++) {
 	case 0:
-		fprintf(stderr, "1 (guessed)\n");
-		return 1;
-
-	case 1:
 		ret = eglChooseConfigReal(dpy, attrib_list, configs, config_size, num_config);
 		fprintf(stderr, "%d\n", ret);
 		return ret;
@@ -261,10 +233,6 @@ EGLAPI EGLBoolean EGLAPIENTRY eglInitialize(EGLDisplay dpy, EGLint *major, EGLin
 
 	switch(counter++) {
 	case 0:
-		fprintf(stderr, "1 (guessed)\n");
-		return 1;
-
-	case 1:
 		ret = eglInitializeReal(dpy, major, minor);
 		fprintf(stderr, "%d\n", ret);
 		return ret;
@@ -289,11 +257,6 @@ EGLAPI EGLBoolean EGLAPIENTRY eglMakeCurrent(EGLDisplay dpy, EGLSurface draw,
 
 	switch(counter++) {
 	case 0:
-	case 1:
-		fprintf(stderr, "1 (guessed)\n");
-		return 1;
-
-	case 2:
 		ret = eglMakeCurrentReal(dpy, draw, read, ctx);
 		fprintf(stderr, "%d\n", ret);
 		return ret;
@@ -316,10 +279,6 @@ EGLAPI EGLDisplay EGLAPIENTRY eglGetDisplay(EGLNativeDisplayType display_id)
 
 	switch(counter++) {
 	case 0:
-		fprintf(stderr, "4 (lying)\n");
-		return (void *)4;
-
-	case 1:
 		ret = eglGetDisplayReal(display_id);
 		fprintf(stderr, "%p\n", ret);
 		return ret;
@@ -348,10 +307,6 @@ EGLAPI EGLSurface EGLAPIENTRY eglCreateWindowSurface(EGLDisplay dpy, EGLConfig c
 
 	switch(counter++) {
 	case 0:
-		fprintf(stderr, "0x4 (guessed)\n");
-		return (EGLSurface)0x4;
-
-	case 1:
 		SDL_VERSION(&sysInfo.version); //Set SDL version
 		if(SDL_GetWMInfo(&sysInfo) <= 0)
 		{
