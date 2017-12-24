@@ -370,3 +370,31 @@ void bcm_host_init(void) {
 	printf("bcm_host_init()\n");
 	return;
 }
+
+void glGenFramebuffersOES(GLsizei n, GLuint* ids) {
+	glGenFramebuffers(n, ids);
+}
+
+void glFramebufferTexture2DOES(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level) {
+	glFramebufferTexture2D(target, attachment, textarget, texture, level);
+}
+
+void glGenRenderbuffersOES(GLsizei n, GLuint* renderbuffers) {
+	glGenRenderbuffers(n, renderbuffers);
+}
+
+GLenum glCheckFramebufferStatusOES(GLenum target) {
+	return glCheckFramebufferStatus(target);
+}
+
+void glBindRenderbufferOES(GLenum target, GLuint renderbuffer) {
+	glBindRenderbuffer(target, renderbuffer);
+}
+
+void glRenderbufferStorageOES(GLenum target, GLenum internalformat, GLsizei width, GLsizei height) {
+	glRenderbufferStorage(target, internalformat, width, height);
+}
+
+void glFramebufferRenderbufferOES(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer) {
+	glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer);
+}
