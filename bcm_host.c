@@ -327,8 +327,8 @@ EGLAPI EGLSurface EGLAPIENTRY eglCreateWindowSurface(EGLDisplay dpy, EGLConfig c
 
 int32_t graphics_get_display_size( const uint16_t display_number, uint32_t *width, uint32_t *height) {
 	printf("graphics_get_display_size(%d, %p, %p)\n", display_number, width, height);
-	*width = 2560;
-	*height = 1700;
+	*width = 1920;
+	*height = 1080;
 
 	SDL_SetVideoMode(*width, *height, 32, SDL_FULLSCREEN);// | SDL_RESIZABLE);
 	return 0;
