@@ -399,3 +399,11 @@ void glRenderbufferStorageOES(GLenum target, GLenum internalformat, GLsizei widt
 void glFramebufferRenderbufferOES(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer) {
 	glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer);
 }
+
+void glDeleteFramebuffersOES(GLsizei n, const GLuint* framebuffers) {
+	glDeleteFramebuffers(n, framebuffers);
+}
+
+void glDeleteRenderbuffersOES(GLsizei n, const GLuint* renderbuffers) {
+	glDeleteRenderbuffers(n, renderbuffers);
+}
